@@ -1,9 +1,7 @@
 #import "/book.typ": book-page
 
-#show: book-page.with(title: "自机教程 by 团子")
+#show: book-page
 
-= 标题 1
+= 没人看的序言
 
-== 标题 1.1
-
-=== 标题 1.1.1
+本教程基于 `LuaSTG aex+ v0.8.22` 版本。
