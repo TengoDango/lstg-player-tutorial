@@ -7,7 +7,7 @@
   authors: ("TengoDango",),
   repository: "https://github.com/TengoDango/LstgMathTutorial",
   summary: [
-    #prefix-chapter("/docs/preface.typ")[前言]
+    #prefix-chapter("docs/preface.typ")[前言]
   ],
 )
 
