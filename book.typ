@@ -10,7 +10,7 @@
     #prefix-chapter("docs/preface.typ")[没人看的序言]
 
     = 从零开始的写自机之旅
-    #chapter("docs/mainline/beginning.typ")[那么怎么开始呢]
+    #chapter("docs/mainline/beginning.typ")[那么从哪里开始呢]
 
     = 我要翻 data!
     #chapter("docs/dataer/if-you-want-it.typ", section: "0")[如果你想要, 你得自己来拿]
@@ -28,12 +28,26 @@
 )
 
 #import "/templates/page.typ": project
+
 #let book-page(content) = {
   show: project.with(
     authors: "TengoDango",
     title: "自机教程 by 团子",
   )
+
   show raw.where(block: true): set text(size: 14pt)
+  
+  show image: set align(center)
+
+  show strong: set text(blue)
 
   content
 }
+
+#let cross-ref(path, reference: none, content) = cross-link(
+  // "/lstg-player-tutorial" + path,
+  path,
+  reference: none,
+  content,
+)
+

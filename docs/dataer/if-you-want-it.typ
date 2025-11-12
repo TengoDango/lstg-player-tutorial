@@ -1,8 +1,6 @@
-#import "/book.typ": book-page, cross-link
+#import "/book.typ": book-page, cross-ref
 
 #show: book-page
-
-#show image: set align(center)
 
 = 如果你想要, 你得自己来拿
 
@@ -12,24 +10,24 @@
 
 我们在编辑器中打开 LuaSTG 所在的文件夹，文件夹里应当包含所有的lua文件，我们说翻data的时候就是指翻这些lua文件。
 
-#image("/assets/images/if-you-want-it-1.png", width: 75%)
+#image("/assets/images/if-you-want-it-1.png", width: 500pt)
 
 我们可以按下 `ctrl+p` 快捷键搜索名字里带 "`player`" 的文件，有 `player.lua, player_system.lua` 两个lua文件，这两个文件包含了大部分的自机逻辑，我们之后会重点分析。
 
-#image("/assets/images/if-you-want-it-3.png", width: 75%)
+#image("/assets/images/if-you-want-it-3.png", width: 600pt)
 
 使用全局搜索功能（在VSCode中有快捷键 `ctrl+shift+f`），我们可以搜索所有文件中出现的 "`player`"。由于自机的特殊性，与自机相关的地方几乎都会含有 "`player`"（不区分大小写）。虽然搜索结果大部分并不重要而且挺难看懂，但这样我们可以几乎没有遗漏地找到所有的自机相关内容。
 
-#image("/assets/images/if-you-want-it-2.png", width: 50%)
+#image("/assets/images/if-you-want-it-2.png", width: 450pt)
 
 我翻了一遍搜索结果，把自机相关的文件总结如下：
-+ #cross-link("/lstg-player-tutorial/docs/appendix/player-lua.typ")[`game\packages\thlib-scripts\THlib\player\player.lua`] \
++ #cross-ref("/docs/appendix/player-lua.typ")[`game\packages\thlib-scripts\THlib\player\player.lua`] \
   浅层的自机逻辑，涉及自机的 base class 以及一些自机相关的class和函数
-+ #cross-link("/lstg-player-tutorial/docs/appendix/player-system-lua.typ")[`game\packages\thlib-scripts\THlib\player\player_system.lua`] \
++ #cross-ref("/docs/appendix/player-system-lua.typ")[`game\packages\thlib-scripts\THlib\player\player_system.lua`] \
   深层的自机逻辑，涉及大量的自机特有的属性和行为
 + `game\plugins\PlayerExtensions` \
   自带的灵梦、魔理沙、咲夜自机
-+ #cross-link("/lstg-player-tutorial/docs/appendix/wisys-lua.typ")[`game\packages\thlib-scripts\THlib\WalkImageSystem.lua`] \
++ #cross-ref("/docs/appendix/wisys-lua.typ")[`game\packages\thlib-scripts\THlib\WalkImageSystem.lua`] \
   自机使用的行走图系统 `PlayerWalkImageSystem`
-+ #cross-link("/lstg-player-tutorial/docs/appendix/lstg-gameobject.typ")[`doc\core\lstg.GameObject.lua`] \
++ #cross-ref("/docs/appendix/lstg-gameobject.typ")[`doc\core\lstg.GameObject.lua`] \
   虽然不是自机相关，但这里说明了所有 class, object 共有的属性
