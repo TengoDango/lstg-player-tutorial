@@ -21,7 +21,7 @@
 #image("/assets/images/if-you-want-it-2.png", width: 70%)
 
 我翻了一遍搜索结果，把自机相关的文件总结如下：
-+ #cross-ref("docs/appendix/player-lua.typ")[`game\packages\thlib-scripts\THlib\player\player.lua`] \
++ #cross-ref("/docs/appendix/player-lua.typ")[`game\packages\thlib-scripts\THlib\player\player.lua`] \
   浅层的自机逻辑，涉及自机的基类以及一些自机相关的class和函数
 + #cross-ref("/docs/appendix/player-system-lua.typ")[`game\packages\thlib-scripts\THlib\player\player_system.lua`] \
   深层的自机逻辑，涉及大量的自机特有的属性和行为

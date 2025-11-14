@@ -45,8 +45,8 @@
 }
 
 #let cross-ref(path, reference: none, content) = cross-link(
-  // "/lstg-player-tutorial" + path,
-  path,
+  "/lstg-player-tutorial" + path,
+  // path,
   reference: none,
   content,
 )
