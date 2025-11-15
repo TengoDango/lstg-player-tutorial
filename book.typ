@@ -33,7 +33,8 @@
 #let book-page(content) = {
   show: project.with(
     authors: "TengoDango",
-    title: "自机教程 by 团子",
+    // title: "自机教程 by 团子",
+    title: x-url-base,
   )
 
   show raw.where(block: true): set text(size: 14pt)

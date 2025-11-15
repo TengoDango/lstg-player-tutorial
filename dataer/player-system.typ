@@ -48,7 +48,7 @@
 
 顺便一提, 当 `self.slowlock` 为真时,
 自机会强制处于低速状态, 具体实现逻辑见
-#cross-ref("/dataer/player-system.typ", reference: [=== `["frame.move"]`])[`["frame.move"]`]
+#cross-ref("dataer/player-system.typ", reference: [=== `["frame.move"]`])[`["frame.move"]`]
 
 === `["frame.control"]`
 

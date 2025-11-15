@@ -35,11 +35,11 @@
 于是自机相关的文件如下:
 + #cross-ref("appendix/player-lua.typ")[`THlib\player\player.lua`] \
   浅层的自机逻辑, 涉及自机的基类以及一些自机相关的class和函数
-+ #cross-ref("/appendix/player-system-lua.typ")[`THlib\player\player_system.lua`] \
++ #cross-ref("appendix/player-system-lua.typ")[`THlib\player\player_system.lua`] \
   深层的自机逻辑, 涉及大量的自机特有的属性和行为
 + `plugins\PlayerExtensions` \
   自带的灵梦, 魔理沙, 咲夜自机
-+ #cross-ref("/appendix/wisys-lua.typ")[`THlib\WalkImageSystem.lua`] \
++ #cross-ref("appendix/wisys-lua.typ")[`THlib\WalkImageSystem.lua`] \
   自机使用的行走图系统 `PlayerWalkImageSystem`
-+ #cross-ref("/appendix/lstg-gameobject.typ")[`doc\core\lstg.GameObject.lua`] \
++ #cross-ref("appendix/lstg-gameobject.typ")[`doc\core\lstg.GameObject.lua`] \
   虽然不是自机相关, 但这里说明了所有 class, object 共有的属性
