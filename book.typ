@@ -30,7 +30,7 @@
 
 #import "/templates/page.typ": project
 
-#let my_prefix = str(x-url-base) + "test"
+#let my_prefix = "/test" + str(x-url-base)
 
 #let book-page(content) = {
   show: project.with(
