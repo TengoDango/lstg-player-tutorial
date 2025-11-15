@@ -74,7 +74,9 @@
 
 === `["frame.move"]`
 
-#cross-ref("dataer/if-you-want-it.typ")[这到底怎么一回事]
+#cross-ref("dataer/player.typ", reference: [== `player_bullet_straight`])[`1`]
+
+#cross-ref("dataer/player-system.typ", reference: [=== `["frame.move"]`])[`2`]
 
 // == `player_lib.system`
 
