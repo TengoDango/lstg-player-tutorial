@@ -30,14 +30,14 @@
 
 #import "/templates/page.typ": project
 
-#let my_prefix = "/test/test/" + "Typst Book"
+#let prefix = (x-url-base).rev().rev()
 
 #let cross-ref(path, reference: none, content) = cross-link(
-  my_prefix + path,
+  prefix + path,
   reference: if reference != none {
     heading-reference(reference)
   },
-  my_prefix,
+  prefix,
   // content,
 )
 
@@ -45,7 +45,7 @@
   show: project.with(
     authors: "TengoDango",
     // title: "自机教程 by 团子",
-    title: my_prefix,
+    title: prefix,
   )
 
   show raw.where(block: true): set text(size: 14pt)
