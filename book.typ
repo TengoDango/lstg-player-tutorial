@@ -39,19 +39,36 @@
   } else {
     path
   }
-  // Ensure path starts with / for absolute path
-  let abs-path = if clean-path.starts-with("/") {
-    clean-path
+  // Ensure path doesn't start with / to avoid double slashes
+  let rel-path = if clean-path.starts-with("/") {
+    clean-path.slice(1)
   } else {
-    "/" + clean-path
+    clean-path
   }
-  // cross-link returns a function, content is passed via function call syntax
+  // Normalize prefix: ensure it's /lstg-player-tutorial/ format
+  // Handle cases where x-url-base might be empty, "/", or already correct
+  let prefix = if type(my_prefix) == "string" {
+    if my_prefix == "" or my_prefix == "/" {
+      "/lstg-player-tutorial/"
+    } else if my_prefix.ends-with("/") {
+      my_prefix
+    } else {
+      my_prefix + "/"
+    }
+  } else {
+    "/lstg-player-tutorial/"
+  }
+  // Build the full path, ensuring no double slashes
+  let full-path = prefix + rel-path
+  // cross-link signature: cross-link(path, reference: none, prefix: none)
+  // The third parameter might be the display content, not prefix
+  // Returns a function that takes content
   cross-link(
-    my_prefix + abs-path,
+    full-path,
     reference: if reference != none {
       heading-reference(reference)
     },
-    my_prefix,
+    content,
   )
 }
 
