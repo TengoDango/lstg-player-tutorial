@@ -30,22 +30,35 @@
 
 #import "/templates/page.typ": project
 
-#let prefix = (x-url-base).rev().rev()
+#let my_prefix = x-url-base
 
-#let cross-ref(path, reference: none, content) = cross-link(
-  prefix + path,
-  reference: if reference != none {
-    heading-reference(reference)
-  },
-  prefix,
-  // content,
-)
+#let cross-ref(path, reference: none, content) = {
+  // Remove .typ extension if present, as HTML files don't have it
+  let clean-path = if path.ends-with(".typ") {
+    path.slice(0, path.len() - 4)
+  } else {
+    path
+  }
+  // Ensure path starts with / for absolute path
+  let abs-path = if clean-path.starts-with("/") {
+    clean-path
+  } else {
+    "/" + clean-path
+  }
+  // cross-link returns a function, content is passed via function call syntax
+  cross-link(
+    my_prefix + abs-path,
+    reference: if reference != none {
+      heading-reference(reference)
+    },
+    my_prefix,
+  )
+}
 
 #let book-page(content) = {
   show: project.with(
     authors: "TengoDango",
-    // title: "自机教程 by 团子",
-    title: prefix,
+    title: "自机教程 by 团子",
   )
 
   show raw.where(block: true): set text(size: 14pt)
