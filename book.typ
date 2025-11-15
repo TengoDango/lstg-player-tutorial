@@ -31,11 +31,12 @@
 #import "/templates/page.typ": project
 
 #let prefix = str(x-url-base)
+
 #let book-page(content) = {
   show: project.with(
     authors: "TengoDango",
     // title: "自机教程 by 团子",
-    title: prefix + "testtest",
+    title: prefix,
   )
 
   show raw.where(block: true): set text(size: 14pt)
@@ -53,7 +54,7 @@
   reference: if reference != none {
     heading-reference(reference)
   },
-  [#(prefix + path + "test")]
+  prefix
   // content,
 )
 
