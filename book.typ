@@ -4,7 +4,7 @@
 #show: book
 
 #let prefix = "lstg-player-tutorial"
-// #let prefix = "."
+#let prefix = "."
 #book-meta(
   title: "何日完工?",
   authors: ("TengoDango",),
