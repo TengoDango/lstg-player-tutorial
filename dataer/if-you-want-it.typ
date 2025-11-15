@@ -33,7 +33,7 @@
 #image("/assets/images/if-you-want-it-2.png", width: 70%)
 
 于是自机相关的文件如下:
-+ #cross-ref("lstg-player-tutorial/appendix/player-lua.typ")[`THlib\player\player.lua`] \
++ #cross-ref("dataer/if-you-want-it.typ")[`THlib\player\player.lua`] \
   浅层的自机逻辑, 涉及自机的基类以及一些自机相关的class和函数;
 + #cross-ref("appendix/player-system-lua.typ")[`THlib\player\player_system.lua`] \
   深层的自机逻辑, 涉及大量的自机特有的属性和行为;
