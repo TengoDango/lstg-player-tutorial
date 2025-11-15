@@ -30,7 +30,7 @@
 
 #import "/templates/page.typ": project
 
-#let my_prefix = "/test" + str(x-url-base) + "/test"
+#let my_prefix = "/test" + str(x-url-base) + "test"
 
 #let cross-ref(path, reference: none, content) = cross-link(
   my_prefix + path,
