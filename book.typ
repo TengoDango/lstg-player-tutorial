@@ -2,28 +2,29 @@
 
 #show: book
 
+#let p = "lstg-player-tutorial/"
 #book-meta(
   title: "何日完工?",
   authors: ("TengoDango",),
   repository: "https://github.com/TengoDango/lstg-player-tutorial/",
   summary: [
-    #prefix-chapter("docs/preface.typ")[没人看的序言]
+    #prefix-chapter(p + "preface.typ")[没人看的序言]
 
     = 从零开始的写自机之旅
-    #chapter("docs/mainline/beginning.typ")[那么从哪里开始呢]
+    #chapter(p + "mainline/beginning.typ")[那么从哪里开始呢]
 
     = 我要翻 data!
-    #chapter("docs/dataer/if-you-want-it.typ", section: "0")[如果你想要, 你得自己来拿]
-    #chapter("docs/dataer/player.typ")[`player.lua` 解析]
-    #chapter("docs/dataer/player-system.typ")[`player_system.lua` 解析]
-    #chapter("docs/dataer/wisys.typ")[`PlayerWalkImageSystem` 解析]
-    #chapter("docs/dataer/others.typ")[杂项]
+    #chapter(p + "dataer/if-you-want-it.typ", section: "0")[如果你想要, 你得自己来拿]
+    #chapter(p + "dataer/player.typ")[`player.lua` 解析]
+    #chapter(p + "dataer/player-system.typ")[`player_system.lua` 解析]
+    #chapter(p + "dataer/wisys.typ")[`PlayerWalkImageSystem` 解析]
+    #chapter(p + "dataer/others.typ")[杂项]
 
     = 没人看的附录
-    #suffix-chapter("docs/appendix/lstg-gameobject.typ")[`lstg.GameObject.lua`]
-    #suffix-chapter("docs/appendix/player-lua.typ")[`player.lua`]
-    #suffix-chapter("docs/appendix/player-system-lua.typ")[`player_system.lua`]
-    #suffix-chapter("docs/appendix/wisys-lua.typ")[`PlayerWalkImageSystem`]
+    #suffix-chapter(p + "appendix/lstg-gameobject.typ")[`lstg.GameObject.lua`]
+    #suffix-chapter(p + "appendix/player-lua.typ")[`player.lua`]
+    #suffix-chapter(p + "appendix/player-system-lua.typ")[`player_system.lua`]
+    #suffix-chapter(p + "appendix/wisys-lua.typ")[`PlayerWalkImageSystem`]
   ],
 )
 
@@ -47,7 +48,6 @@
 
 #let cross-ref(path, reference: none, content) = cross-link(
   "/lstg-player-tutorial" + path,
-  // path,
   reference: none,
   content,
 )

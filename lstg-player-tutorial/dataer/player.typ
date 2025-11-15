@@ -26,7 +26,7 @@
 (具体见 `/*TODO*/`), 所以data没有重写`player_class`的对应回调.
 
 这四个回调写的很简单, 主要就是对 `player_lib.system` 的调用,
-详细的逻辑见 #cross-ref("/docs/dataer/player-system.typ")[`player_system.lua`解析].
+详细的逻辑见 #cross-ref("/dataer/player-system.typ")[`player_system.lua`解析].
 
 === `player_class:findtarget()`
 
