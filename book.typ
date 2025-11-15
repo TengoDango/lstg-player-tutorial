@@ -3,8 +3,9 @@
 
 #show: book
 
-#let prefix = "lstg-player-tutorial"
+// #let prefix = "lstg-player-tutorial"
 #let prefix = "."
+
 #book-meta(
   title: "何日完工?",
   authors: ("TengoDango",),
@@ -47,6 +48,9 @@
 
   content
 }
+
+#let prefix = "lstg-player-tutorial"
+// #let prefix = "."
 
 #let cross-ref(path, reference: none, content) = cross-link(
   "/" + prefix + path,
