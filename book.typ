@@ -45,22 +45,30 @@
   } else {
     clean-path
   }
-  // Ensure prefix is correct: should be /lstg-player-tutorial/ or similar
-  // If my_prefix is empty or just "/", use a default
-  let prefix = if my_prefix == "" or my_prefix == "/" {
-    "/lstg-player-tutorial/"
-  } else if my_prefix.ends-with("/") {
-    my_prefix
+  // Normalize prefix: ensure it's /lstg-player-tutorial/ format
+  // Handle cases where x-url-base might be empty, "/", or already correct
+  let prefix = if type(my_prefix) == "string" {
+    if my_prefix == "" or my_prefix == "/" {
+      "/lstg-player-tutorial/"
+    } else if my_prefix.ends-with("/") {
+      my_prefix
+    } else {
+      my_prefix + "/"
+    }
   } else {
-    my_prefix + "/"
+    "/lstg-player-tutorial/"
   }
-  // cross-link returns a function, content is passed via function call syntax
+  // Build the full path, ensuring no double slashes
+  let full-path = prefix + rel-path
+  // cross-link signature: cross-link(path, reference: none, prefix: none)
+  // The third parameter might be the display content, not prefix
+  // Returns a function that takes content
   cross-link(
-    prefix + rel-path,
+    full-path,
     reference: if reference != none {
       heading-reference(reference)
     },
-    prefix,
+    content,
   )
 }
 
