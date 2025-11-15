@@ -48,7 +48,7 @@
 }
 
 #let cross-ref(path, reference: none, content) = cross-link(
-  x-url-base + path,
+  str(x-url-base) + path,
   reference: if reference != none {
     heading-reference(reference)
   },
