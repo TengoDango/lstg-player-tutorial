@@ -48,7 +48,6 @@
   content
 }
 
-#let prefix = str(x-url-base)
 #let cross-ref(path, reference: none, content) = cross-link(
   prefix + path,
   reference: if reference != none {
