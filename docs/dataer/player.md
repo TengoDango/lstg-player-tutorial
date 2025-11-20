@@ -34,7 +34,7 @@ data 重写的四个回调写的很短，主要就是对 `player_lib.system` 的
 
 ## `MixTable(x, t1, t2)`
 
-“子机位置表的线性插值”，注释如是写道。具体逻辑见 [`TODO`]()
+“子机位置表的线性插值”，注释如是写道。具体逻辑见 [`TODO`](./player-system)
 
 ## `grazer`
 
