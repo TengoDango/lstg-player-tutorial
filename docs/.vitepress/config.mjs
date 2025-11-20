@@ -5,6 +5,7 @@ export default defineConfig({
   title: 'LuaSTG 自机教程',
   description: 'LuaSTG 自机教程',
   base: '/lstg-player-tutorial/',
+  ignoreDeadLinks: true,
 
   themeConfig: {
     nav: [
