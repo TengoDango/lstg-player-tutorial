@@ -27,7 +27,7 @@ data 重写的四个回调写的很短，主要就是对 `player_lib.system` 的
 比如，如果你有一套自机行走图系统，那么可以把 `_wisys` 属性设为你的行走图系统。又比如你想把收点线换成自动收点，那么可以把 `_playersys` 里的对应逻辑换掉。
 这不会导致 data 预设的自机系统改变。
 
-### `player_class:findtarget()`
+### `player_class.findtarget(p)` {#playerclass-findtarget}
 
 这个函数用于给自机寻找一个要追踪的敌人。话虽如此，你也可以把它用到其他 obj (比如自机的追踪弹)。
 
