@@ -20,6 +20,13 @@
 
 data 重写的四个回调写的很短，主要就是对 `player_lib.system` 的调用，详细的逻辑见 [`player_system.lua 解析`](./player-system)。
 
+### `player_class:init()`
+
+在 `init` 回调中，我们看到自机对象有 `_wisys`, `_playersys` 两个属性，对应自机的行走图系统和其他系统。这使得我们可以在不修改 data 的情况下覆盖自机的一些预设行为。
+
+比如，如果你有一套自机行走图系统，那么可以把 `_wisys` 属性设为你的行走图系统。又比如你想把收点线换成自动收点，那么可以把 `_playersys` 里的对应逻辑换掉。
+这不会导致 data 预设的自机系统改变。
+
 ### `player_class:findtarget()`
 
 这个函数用于给自机寻找一个要追踪的敌人。话虽如此，你也可以把它用到其他 obj (比如自机的追踪弹)。

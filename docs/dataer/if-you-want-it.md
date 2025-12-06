@@ -24,7 +24,7 @@
 
 全局搜索 (`ctrl+shift+f`)、搜索文件 (`ctrl+p`)、查找定义 (`f12`)、查找引用 (`shift+f12`) 四个功能在查阅 data 时非常实用，使用得当可以帮助你快速定位想要查找的内容。
 
-于是自机相关的文件如下，你可以用前面提到的方法尝试搜索它们：
+于是自机相关的文件如下，你可以尝试用前面提到的方法搜索它们：
 - [`THlib/player/player.lua`](../appendix/player-lua) \
   浅层的自机逻辑，涉及自机的基类以及一些自机相关的class和函数；
 - [`THlib/player/player_system.lua`](../appendix/player-system-lua) \

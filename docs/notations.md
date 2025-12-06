@@ -34,7 +34,7 @@ LuaSTG 中最基本的类对应的变量名是 `object`。
 
 ## Field
 
-在面向对象编程中，field 指类和对象里的数据成员，有 “成员” “字段” “属性” 等相似但又有些微妙区别的叫法。
+在面向对象编程中，field 指类和对象里的数据成员，有 “成员” “字段” “属性” 等相似但又有些微妙区别的叫法，本教程统一称其为 “属性”。
 
 例：`self.x`, `self.y`, `self.rot`
 
@@ -74,7 +74,7 @@ end
 -- 对象
 local function New(class, ...)
     local obj = {}
-    point_class.init(obj)
+    point_class.init(obj, ...)
     return obj
 end
 local point_object = New(point_class, 20, 30)
