@@ -1,8 +1,4 @@
-#import "/include.typ": *
-
-#show: book-page
-
-= `player.lua`
+# `player.lua`
 
 ```lua
 ---=====================================
@@ -510,3 +506,4 @@ local function LoadPlayerPacks()
     PlayerListSort()
 end
 ```
+

@@ -1,0 +1,46 @@
+/* 确保数学公式容器有足够高度 */
+.vp-doc .math {
+  overflow: visible !important;
+  min-height: auto !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* 修复 MathJax 容器高度 */
+.vp-doc mjx-container,
+.vp-doc .mjx-container {
+  overflow: visible !important;
+  min-height: auto !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+.vp-doc .math-display mjx-container,
+.vp-doc .math-display .mjx-container,
+.vp-doc div[class*="math"] mjx-container,
+.vp-doc div[class*="math"] .mjx-container,
+.vp-doc mjx-container[display="true"],
+.vp-doc .mjx-container[display="true"] {
+  overflow: visible !important;
+  min-height: auto !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* 修复 aligned 环境的高度 */
+.vp-doc .math .aligned,
+.vp-doc .MathJax .aligned {
+  display: block !important;
+  overflow: visible !important;
+  min-height: auto !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* 确保 cases 环境有足够空间 */
+.vp-doc .math .cases,
+.vp-doc .MathJax .cases {
+  min-height: 3em !important;
+  height: auto !important;
+}
+

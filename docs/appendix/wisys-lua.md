@@ -1,10 +1,4 @@
-#import "/include.typ": *
-
-#show: book-page
-
-= `WalkImageSystem.lua/PlayerWalkImageSystem`
-
-#set text(20pt)
+# `WalkImageSystem.lua/PlayerWalkImageSystem`
 
 ```lua
 PlayerWalkImageSystem = plus.Class()

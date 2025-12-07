@@ -1,8 +1,4 @@
-#import "/include.typ": *
-
-#show: book-page
-
-= `lstg.GameObject.lua`
+# `lstg.GameObject.lua`
 
 ```lua
 --------------------------------------------------------------------------------
@@ -308,3 +304,4 @@ local render_object = {
 	rc = lstg.ParticleSystemData("");
 }
 ```
+

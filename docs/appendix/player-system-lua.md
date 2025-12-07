@@ -1,8 +1,4 @@
-#import "/include.typ": *
-
-#show: book-page
-
-= `player_system.lua`
+# `player_system.lua`
 
 ```lua
 local player_lib = player_lib

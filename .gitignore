@@ -1,2 +1,27 @@
+# PDF files
 *.pdf
-dist/*
+
+# Node.js
+node_modules/
+yarn.lock
+pnpm-lock.yaml
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/.vitepress/temp/
+
+# Build outputs
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.iml

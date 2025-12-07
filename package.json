@@ -1,0 +1,14 @@
+{
+  "name": "lstg-player-tutorial",
+  "version": "1.0.0",
+  "description": "LuaSTG 自机教程",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "markdown-it-mathjax3": "^4.3.2"
+  }
+}
