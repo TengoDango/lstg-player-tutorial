@@ -242,7 +242,29 @@ sp: {
 
 ### `frame.death1` 事件
 
-// TODO
+death state 为 1 时执行逻辑，对应 miss 流程第一阶段的起点。
+- 如果自机被时停，则 `death` 属性减 1 (非常困惑，时停又不影响 `death` 更新，这段代码就只是让 `death` 计时器多走了一帧)
+- `item.PlayerMiss(player)`：处理符卡奖励和残机等游戏资源的变化
+- `death_weapon`：对所有敌人造成一点点伤害
+- `deatheff`：渲染反色圈
+- `player_death_ef`：渲染粒子效果
+
+### `frame.death2` 事件
+
+death state 为 2 时执行逻辑，对应 miss 流程第二阶段的起点。
+- 依然困惑的 `death` 属性减 1
+- `hide` 属性设为 `true`，即关掉自机的渲染
+
+### `frame.death3` 事件
+
+death state 为 3 时执行逻辑，对应 miss 第三阶段的起点。
+- 依然困惑的 `death` 属性减 1
+- 自机坐标 `x`,`y` 以及子机基准坐标 `supportx`,`supporty` 设为 (0, -236)
+
+### `frame.death4` 事件
+
+death state 为 4 时执行逻辑，对应 miss 第三阶段的中间过程。
+- 自机 y 坐标从大约 -250 匀速移动到 -192 (有 1 帧的瞬移吗，唉也行吧)
 
 ## 掉落物收集
 
@@ -257,6 +279,8 @@ sp: {
 收集线高度。
 
 ## 按键 // TODO
+
+感觉没什么能用到的内容，以后再写吧
 
 ## 杂项
 
