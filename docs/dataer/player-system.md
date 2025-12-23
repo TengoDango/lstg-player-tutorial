@@ -84,10 +84,13 @@ data 预设的事件如下：
 - 取值限制在 0 ~ 1。
 
 ### `player.dialog: bool`
-【可修改】是否处于对话状态，为 `true` 时自机无法进行射击、使用 bomb、c 键操作。
+【可读写】开启该属性将对自机造成以下影响：
+- 无法射击、使用 bomb、执行 c 键操作；
+- `fire` 属性不会更新；
+- 被弹时不会发生任何事 (连消弹都没有)。
 
 ### `player.nextshoot,nextspell,nextsp: integer`
-【自动更新，可修改】通常射击 / 使用 bomb / c 键操作的冷却倒计时 (单位：帧)。
+【自动更新，可读写】通常射击 / 使用 bomb / c 键操作的冷却倒计时 (单位：帧)。
 
 ### `frame.control` 事件
 自机射击逻辑的框架。
@@ -113,7 +116,7 @@ data 预设的事件如下：
 
 ### `player.slist: table`
 
-【可修改】子机设定位置表。
+【可读写】子机设定位置表。
 ```
 slist: {
   火力等级: integer --> 子机信息: {
@@ -162,7 +165,7 @@ sp: {
 
 ### `player.hspeed,lspeed: number = 4, 2`
 
-【可修改】自机的高速、低速。前缀 `h`,`l` 表示 high 和 low。
+【可读写】自机的高速、低速。前缀 `h`,`l` 表示 high 和 low。
 
 ### `player.slow: 0 or 1`
 
@@ -172,26 +175,30 @@ sp: {
 - `slow` 在自机 death state 不为 0 时不会更新 (详见 `frame.updateSlow` 事件)，
 - 当 `player.slowlock` 为 `true` 时，`slow` 强制为 1 (详见 `frame.move` 事件)。
 
+### `player.slowlock: bool`
+
+【可读写】为 `true` 时，`slow` 属性强制为 1。
+
 ### `player.lh: 0 ~ 1` {#player-lh}
 
 【自动更新，只读】平滑跟随 `player.slow`，每帧增/减 0.5 * 0.3 = 0.15，限制取值范围为 0 ~ 1。
 
 ### `player.lock: bool`
 
-【可修改】该属性为 `true` 时，自机无法移动。
+【可读写】该属性为 `true` 时，方向键无法控制自机。
 
 值得注意的是，该属性设为 `true` 会影响 [death state](#death-state)，从而导致一些额外的并不直观的后果：
 - 自机无法射击、使用 bomb、执行 c 键操作；
 - `slow` 和 `fire` 属性不会更新；
-- 自机不会吸引新的掉落物；
+- 自机不会吸引新的掉落物。
 
 ### `player.time_stop: bool`
 
-【可修改】该属性为 `true` 时，自机系统的若干预设操作不会执行：
+【可读写】该属性为 `true` 时，自机系统的若干预设操作不会执行：
 - 移动、射击、使用 bomb、执行 c 键操作，
 - `timer`, `slow`, `fire` 属性更新，
 - 行走图系统的状态更新，
-- 子机系统的位置更新，
+- 子机位置表的位置更新，
 - 低速法阵的若干状态更新，
 - 吸引新的掉落物。
 
@@ -212,9 +219,9 @@ sp: {
 
 ## 被弹
 
-### `player.death: integer, 0 ~ 100`
+### `player.death: integer, 0 ~ 100` {#death}
 
-【自动更新，可修改】死亡状态的计时器，倒计时。
+【自动更新，可读写】死亡状态的计时器，倒计时。
 
 自机 data 对 `death` 属性的修改除了每帧减 1 之外，主要还有两个地方：
 - 触发碰撞回调时，将 `death` 设为 100，从而开启被弹流程；
@@ -224,9 +231,9 @@ sp: {
 
 ### `player.__death_state: integer` (death state) {#death-state}
 
-【自动更新，只读】死亡状态枚举，主要由死亡计时器 `player.death` 决定。`frame.updateDeathState` 事件描述了该属性如何取值：
+【自动更新，只读】枚举 death state，主要由死亡计时器 `player.death` 决定。`frame.updateDeathState` 事件描述了该属性如何取值：
 | 值 | 情况 |
-| :-: | --- |
+| :-: | :-- |
 | 0 | 未进入 miss 流程 (`player.death == 0 or player.death > 90`)，且未禁止移动 (`not player.lock`) 未被时停 (`not player.time_stop`) |
 | 1 | miss 流程第一阶段的起点 (`player.death == 90`) |
 | 2 | miss 流程第二阶段的起点 (`player.death == 84`) |
@@ -236,9 +243,9 @@ sp: {
 
 自机 data 一些地方会判断 death state 是否为 0 来决定是否要执行逻辑。我们需要注意 death state 为 0 不只表示自机没有被弹，还蕴含了对 `lock` 和 `time_stop` 属性的判断，所以不要想当然地认为只有被弹会影响这些逻辑的执行 (说到底就是 death state 这个名字它不合适，唉屎山)。
 
-### `player.protect: int`
+### `player.protect: integer`
 
-【自动更新，可修改】自机剩余无敌时间 (单位：帧)。在 [`system:colli`](#system-colli) 和行走图系统中用到。
+【自动更新，可读写】自机剩余无敌时间 (单位：帧)。在 [`system:colli`](#system-colli)、行走图系统以及各自机的 `spell` 回调中用到。
 
 ### `frame.death1` 事件
 
