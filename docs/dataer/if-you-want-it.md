@@ -2,17 +2,7 @@
 
 阅读自机相关的 data 内容对理解自机运行的原理有很大帮助。读 data 这件事并不容易，我会在这个教程里作一些整理，但是我仍然非常希望你亲自去读一读 data。如果你不知道如何查阅 data，也许这一页可以帮到你。
 
-要阅读 data，通常你需要一个代码编辑器，比如
-
-<img src="../assets/images/microsoft-vs-code.jpg" style="width: 30%; margin: 0 auto">
-
-代码编辑器能够提供全局查找文件、文本的功能，以及对 lua 语言的语法高亮、查找引用等的支持。我将以 vscode 为例介绍查找自机相关 data 的方法，如果你在使用其他编辑器，也可以适当的参考。如果你在使用记事本，呃，你开心就好......
-
-我们在 vscode 中安装 emmylua 或者 sumneko lua 插件，从而给 lua 语言提供支持。打开 LuaSTG 所在的文件夹，文件夹里应该包含所有的 lua 文件，我们要看的就是这些 Lua 文件。
-
-<img src="../assets/images/if-you-want-it-1.png" style="width: 70%; margin: 0 auto">
-
-为了方便以后查看 data，我们可以把工作区另存为文件，以后直接点开文件就可以打开工作区。我个人喜欢用 project manager 插件，这样我连工作区文件都不用找了 (笑)。
+阅读 data 之前的准备工作见[准备工作](../mainline/helloworld#preparation)。
 
 我们可以按 `ctrl+p` 快捷键搜索名字里带 "player" 的文件，有 `player.lua`, `player_system.lua` 两个 lua 文件，它们包含了自机系统的大部分逻辑，我们之后会重点分析。
 

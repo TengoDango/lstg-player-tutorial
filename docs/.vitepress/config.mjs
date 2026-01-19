@@ -22,7 +22,7 @@ export default defineConfig({
       {
         text: '从零开始的自机之旅',
         items: [
-          { text: '旅行前的准备', link: '/mainline/beginning' }
+          { text: 'Hello world！第一个自机', link: '/mainline/helloworld' }
         ]
       },
       {
@@ -35,7 +35,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '0 人在意的附录',
+        text: '附录',
         items: [
           { text: 'lstg.GameObject.lua', link: '/appendix/lstg-gameobject' },
           { text: 'player.lua', link: '/appendix/player-lua' },
