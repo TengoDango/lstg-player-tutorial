@@ -22,7 +22,9 @@ export default defineConfig({
       {
         text: '从零开始的自机之旅',
         items: [
-          { text: 'Hello world！第一个自机', link: '/mainline/helloworld' }
+          { text: 'Hello world！第一个自机', link: '/mainline/helloworld' },
+          { text: '复刻：灵梦自机', link: '/mainline/reimu' },
+          { text: '附录：自机代码下载', link: '/mainline/appendix' }
         ]
       },
       {

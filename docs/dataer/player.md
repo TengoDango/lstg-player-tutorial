@@ -68,13 +68,13 @@ data 重写的四个回调写的很短，主要就是对 `player_lib.system` 的
 函数内容有一句 `self.delay = delay or 0`，这是有默认值的变量的常见写法。
 这样在不传入 `delay` 参数时 (此时 `delay` 的值为 `nil`)，`self.delay` 会设置为0。
 
-## `player_bullet_trail`
+## `player_bullet_trail` {#trail}
 
 诱导弹的模板，在灵梦机体中被用到。它的目标 obj 在 init 回调传入，之后不再改变。
 
 它的追踪原理写的比较难懂，代码翻译如下：
 
-设子弹当前位置为 $S$，目标位置为 $T$，子弹朝向 `self.rot` = $\theta$，传入参数 `trail` = $t$.
+设子弹当前位置为 $S$，目标位置为 $T$，子弹朝向 `self.rot` = $\theta$。
 
 子弹的速度大小不变，运动方向和贴图朝向一致。当目标存在且开启碰撞时，子弹的朝向发生改变：
 
@@ -83,7 +83,7 @@ $$
     \theta_{ST} & := \text{Angle}(S,T), \\
     \Delta\theta & := (\theta_{ST} - \theta) \bmod 360\degree \\
     & (-180\degree \lt \Delta\theta \le 180\degree), \\
-    \omega & := \dfrac{t \cdot 1\degree}{|ST| + 1}, \\
+    \omega & := \dfrac{\text{trail} \cdot 1\degree}{|ST| + 1}, \\
     \theta' & := \begin{cases}
       \theta_{ST} & \text{若 } |\Delta\theta| \le \omega, \\
       \theta + \omega \cdot \text{sign}(\Delta\theta) & \text{若 } |\Delta\theta| > \omega.
@@ -93,7 +93,7 @@ $$
 
 $\theta'$ 为更新后的子弹朝向。
 
-追踪的过程简单来说是子弹的朝向以一个动态的角速度 $\omega$ 告诉与敌人连线的方向，当朝向足够接近 (差值小于 $\omega$) 时直接设置为连线方向，以防止朝向抖动。子弹与敌人越近，角速度 $\omega$ 越大。
+追踪的过程简单来说是子弹的朝向以一个动态的角速度 $\omega$ 靠近与敌人连线的方向，当朝向足够接近 (差值小于 $\omega$) 时直接设置为连线方向，以防止朝向抖动。子弹与敌人越近，角速度 $\omega$ 越大。
 
 ## `player_spell_mask`
 
