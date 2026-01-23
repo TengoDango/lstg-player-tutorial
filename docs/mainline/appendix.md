@@ -1,3 +1,3 @@
 # 附录：自机代码下载
 
-[MyPlayers.zip](../assets/MyPlayers.zip)
+<a href="../assets/MyPlayers.zip" download>MyPlayers.zip</a>
