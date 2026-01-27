@@ -1,4 +1,4 @@
-# [`player_system.lua`](../appendix/player-system-lua) 解析
+# `player_system.lua` 解析
 
 `player_system.lua` 记录了自机一些系统的具体逻辑。由于内容比较杂，这里就不按代码顺序解析了。
 

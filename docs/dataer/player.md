@@ -1,4 +1,4 @@
-# [`player.lua`](../appendix/player-lua) 解析
+# `player.lua` 解析
 
 `player.lua` 主要记录了自机的基类和一些与自机有关的类。
 
