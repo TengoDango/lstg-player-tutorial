@@ -216,13 +216,20 @@ self.slist[6] = self.slist[5]
 function ReimuPlayer:render()
     -- 子机的渲染
     for i = 1, 4 do
-        if self.sp[i] and self.sp[i][3] > 0.5 then
-            Render(
-                img .. "support",              -- 贴图
-                self.supportx + self.sp[i][1], -- x
-                self.supporty + self.sp[i][2], -- y
-                self.timer * 3                 -- 朝向
-            )
+        if self.sp[i] then
+            local x = self.supportx + self.sp[i][1]
+            local y = self.supporty + self.sp[i][2]
+            local rot = self.timer * 3
+            --# 风格1: 或者渲染, 或者不渲染
+            if self.sp[i][3] > 0.5 then
+                Render(img .. "support", x, y, rot)
+            end
+            --# 风格2: 以透明度进行过渡
+            -- SetImageState(img .. "support", "", Color(self.sp[i][3] * 255, 255, 255, 255))
+            -- Render(img .. "support", x, y, rot)
+            --# 风格3: 以贴图大小进行过渡
+            -- Render(img .. "support", x, y, rot, self.sp[i])
+            -- Render(img .. "support", x, y, rot, self.sp[i], 1)
         end
     end
     -- 行走图的渲染 (默认的渲染行为)

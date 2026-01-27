@@ -20,7 +20,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '从零开始的自机之旅',
+        text: '主线',
         items: [
           { text: 'Hello world！第一个自机', link: '/mainline/helloworld' },
           { text: '复刻：灵梦自机', link: '/mainline/reimu' },
@@ -28,7 +28,13 @@ export default defineConfig({
         ]
       },
       {
-        text: '我必须立刻开始品鉴 data',
+        text: '番外',
+        items: [
+          { text: '环绕子机', link: '/extra/round-supports' }
+        ]
+      },
+      {
+        text: 'Data',
         items: [
           { text: '如果你想要，你得自己来拿', link: '/dataer/if-you-want-it' },
           { text: '自机相关属性整理', link: '/dataer/fields' },
@@ -36,15 +42,6 @@ export default defineConfig({
           { text: 'player_system.lua 解析', link: '/dataer/player-system' },
         ]
       },
-      {
-        text: '附录',
-        items: [
-          { text: 'lstg.GameObject.lua', link: '/appendix/lstg-gameobject' },
-          { text: 'player.lua', link: '/appendix/player-lua' },
-          { text: 'player_system.lua', link: '/appendix/player-system-lua' },
-          { text: 'PlayerWalkImageSystem', link: '/appendix/wisys-lua' }
-        ]
-      }
     ],
 
     socialLinks: [
