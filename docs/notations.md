@@ -4,9 +4,11 @@
 
 ## 表 (Table)
 
-表 (table) 是 Lua 语言的一个数据类型，在 LuaSTG 中随处可见，而且用法多样，是语法上的一个重难点。
+表 (table) 是 lua 语言的一个数据类型，属于引用类型，用法多样，是语法上的一个重难点。
 
-如果你担心自己对 table 了解不够，我可以向你推荐以下教程：
+表的语法特性使得它在 LuaSTG 中有着广泛的应用。LuaSTG 的类和对象 (包括但不限于简单子弹、自定义子弹、激光、自机、boss 等等) 本质都是表。
+
+如果你担心自己对表的了解不够，我可以向你推荐以下教程：
 - [表，tables - Lua 编程（第 4 版）](https://lua.xfoss.com/tables.html)
 
 ## 语法糖
@@ -22,9 +24,7 @@ Lua 的语法糖主要是关于表和函数的，比如：
 
 类和对象是 “面向对象编程” 的两个基本概念，类似于 “模板” 与 “实例” 的关系。
 
-LuaSTG 中的类是由 `Class(...)` 函数返回的表，对应到编辑器则是 define bullet, define object 等节点；
-
-而对象是由 `New(...)` 函数返回的表，对应编辑器中 create bullet, create object 等节点。
+LuaSTG 中的类是由 `Class(...)` 函数返回的表，对应到编辑器则是 define bullet, define object 等节点；而对象是由 `New(...)` 函数返回的表，对应编辑器中 create bullet, create object 等节点。
 
 LuaSTG 模拟了面向对象编程的 “继承” 机制，`derived = Class(base)` 语句可以创建一个继承了 `base` 基类的 `derived` 子类。
 

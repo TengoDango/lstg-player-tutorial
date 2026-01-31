@@ -12,6 +12,19 @@ export default defineConfig({
       { text: 'GitHub', link: 'https://github.com/TengoDango/lstg-player-tutorial' }
     ],
 
+    outline: {
+      label: '页面导航',
+    },
+    returnToTopLabel: '返回顶部',
+
+    docFooter: {
+      prev: '上一篇',
+      next: '下一篇',
+    },
+
+    darkModeSwitchLabel: '深/浅色主题',
+    darkModeSwitchTitle: '切换至深色主题',
+
     sidebar: [
       {
         items: [
@@ -49,7 +62,22 @@ export default defineConfig({
     ],
 
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        translations: {
+          button: { buttonText: '在文档内搜索' },
+          modal: {
+            resetButtonTitle: '清除搜索条件',
+            noResultsText: '没有搜索结果',
+            footer: {
+              selectText: '确认',
+              navigateText: '切换',
+              closeText: '关闭'
+            },
+            displayDetails: '显示具体内容'
+          }
+        }
+      }
     }
   },
 
