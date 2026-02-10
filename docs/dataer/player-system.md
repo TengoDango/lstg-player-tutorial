@@ -83,7 +83,7 @@ data 预设的事件如下：
 - 如果按住射击键，且不处于对话状态 (因为对话状态无法射击)，则 `player.fire` 每帧增加 0.16，否则每帧减少 0.16；
 - 取值限制在 0 ~ 1。
 
-### `player.dialog: bool`
+### `player.dialog: bool` {#dialog}
 【可读写】开启该属性将对自机造成以下影响：
 - 无法射击、使用 bomb、执行 c 键操作；
 - `fire` 属性不会更新；
@@ -92,7 +92,7 @@ data 预设的事件如下：
 ### `player.nextshoot,nextspell,nextsp: integer`
 【自动更新，可读写】通常射击 / 使用 bomb / c 键操作的冷却倒计时 (单位：帧)。
 
-### `frame.control` 事件
+### `frame.control` 事件 {frame-control}
 自机射击逻辑的框架。
 - 通常射击：若冷却完成 (`nextshoot <= 0`)，且按下射击键 (`__shoot_flag`)，则执行 [`system:shoot()`](#system-shoot) 回调。
 - 使用 bomb：若冷却完成 (`nextspell <= 0`)，且按下 bomb 键 (`__spell_flag`)，且 bomb 数量大于 0，则执行 [`system:spell()`](#system-spell) 回调。
@@ -250,7 +250,7 @@ self.sp = {
 - 用 `__move_dx`,`__move_dy` 属性记录 (`dx`,`dy`)
 - 如果自机的 death state 不为 0，那么以上逻辑不会执行，`__move_dx`,`__move_dy` 设置为 0。
 
-## 被弹
+## 被弹 {#miss}
 
 ### `player.death: integer, 0 ~ 100` {#death}
 

@@ -2,7 +2,7 @@
 
 来一期简单的，地灵殿梦A的环绕子机。
 
-<img src='../assets/images/round-supports.gif' style='width: 80%; margin: 0 auto;'>
+<img src='../assets/images/orbiting-supports.gif' style='width: 80%; margin: 0 auto;'>
 
 我们在复刻灵梦自机时介绍过，可以通过 `self.slist` 表来设置稳定状态的子机位置，然后每帧读取 `self.sp` 表来实现子机渲染：
 

@@ -43,7 +43,8 @@ export default defineConfig({
       {
         text: '番外',
         items: [
-          { text: '环绕子机', link: '/extra/round-supports' }
+          { text: '环绕子机', link: '/extra/orbiting-supports' },
+          { text: '自动雷', link: '/extra/auto-bomb' }
         ]
       },
       {
