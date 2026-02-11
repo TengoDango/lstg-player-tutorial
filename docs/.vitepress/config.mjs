@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid({
   title: 'LuaSTG 自机教程',
   description: 'LuaSTG 自机教程',
   base: '/lstg-player-tutorial/',
@@ -44,7 +45,8 @@ export default defineConfig({
         text: '番外',
         items: [
           { text: '环绕子机', link: '/extra/orbiting-supports' },
-          { text: '自动雷', link: '/extra/auto-bomb' }
+          { text: '自动雷', link: '/extra/auto-bomb' },
+          { text: '蓄力射击', link: '/extra/charge-bullet' }
         ]
       },
       {
@@ -90,4 +92,3 @@ export default defineConfig({
     }
   }
 })
-
