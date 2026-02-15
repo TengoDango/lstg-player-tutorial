@@ -46,7 +46,8 @@ export default withMermaid({
         items: [
           { text: '环绕子机', link: '/extra/orbiting-supports' },
           { text: '自动雷', link: '/extra/auto-bomb' },
-          { text: '蓄力射击', link: '/extra/charge-bullet' }
+          { text: '蓄力射击', link: '/extra/charge-bullet' },
+          { text: '手写子机系统', link: '/extra/support-system' }
         ]
       },
       {

@@ -12,7 +12,7 @@
 
 <a href="../蓄力射击.lua" download>番外：蓄力射击</a>
 
-<a href="../8个子机.lua" download>番外：8个子机</a>
+<a href="../手写子机系统.lua" download>番外：手写子机系统</a>
 
 <a href="../风神录魔C.lua" download>番外：风神录魔C</a>
 
