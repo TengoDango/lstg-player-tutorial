@@ -47,7 +47,9 @@ export default withMermaid({
           { text: '环绕子机', link: '/extra/orbiting-supports' },
           { text: '自动雷', link: '/extra/auto-bomb' },
           { text: '蓄力射击', link: '/extra/charge-bullet' },
-          { text: '手写子机系统', link: '/extra/support-system' }
+          { text: '手写子机系统', link: '/extra/support-system' },
+          { text: '风神录魔C：更复杂的子机', link: '/extra/marisa-c' },
+          { text: '风神录魔A：更复杂的子机', link: '/extra/marisa-a' }
         ]
       },
       {

@@ -41,7 +41,7 @@ function ExtraPlayer:frame()
             -- 火力降低, 子机消失 -> 清除位置
             self.spx[i], self.spy[i] = nil, nil
         elseif is_valid and self.spx[i] and self.counter >= 60 then
-            -- 稳定在高速状态 -> 指数逼近设定位置
+            -- 稳定在高速状态 -> 线性插值逼近设定位置
             local x = self.x + self.sp[i][1]
             local y = self.y + self.sp[i][2]
             self.spx[i] = self.spx[i] + (x - self.spx[i]) * 0.3
