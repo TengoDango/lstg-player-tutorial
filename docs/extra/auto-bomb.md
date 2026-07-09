@@ -23,11 +23,11 @@
 - `not self.dialog`：自机不处于[对话状态](../dataer/player-system#dialog)
 - `self.nextspell <= 0`：bomb 已经冷却完毕
 - `lstg.var.bomb >= 2`：bomb 数量足够
-- `not lstg.var.block_spell`：一个刻意设置的阻断条件
+- `not lstg.var.block_spell`：没有禁止自机使用 bomb
 
 满足使用 bomb 的条件后，就按照 data 的逻辑使用 bomb：
 
-- `item.PlayerSpell()`：符卡奖励相关行为
+- `item.PlayerSpell()`：符卡奖励等其他行为
 - `lstg.var.bomb = lstg.var.bomb - 2`：bomb 数量减 2
 - `ExtraPlayer.spell(self)`：执行该自机类的 spell 回调
 - `self.death = 0`：死亡计数器归零，从而撤消死亡状态
