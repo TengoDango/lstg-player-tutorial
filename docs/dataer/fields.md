@@ -319,11 +319,11 @@ death state 不为零的情况会影响一些自机行为的执行：
 ```lua
 self.imgs = {
     -- 静止动画, 任意张图片, 整体为一个循环节
-    normal = { "normal1", ... },
+    normal = { "normal img1", "normal img2", ... },
     -- 左移动画, 不少于4张图片, 倒数 ani 张为循环节
-    left = { ani = 3, "left1", ... },
+    left = { ani = 3, "left img1", "left img2", ... },
     -- 右移动画, 不少于4张图片, 倒数 ani 张为循环节
-    right = { ani = 3, "right1", ... },
+    right = { ani = 3, "right img1", "right img2", ... },
 }
 ```
 

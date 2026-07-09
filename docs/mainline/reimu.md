@@ -17,31 +17,32 @@
 
 ```lua
 --- __init__.lua
-lstg.plugin.RegisterEvent("afterMod", "My Players", 100, function()
-    -- Include("test-player/player.lua")
+lstg.plugin.RegisterEvent("afterMod", "Reimu Player", 100, function()
     Include("reimu-player/player.lua")
 end)
 ```
 
-来到 `player.lua`，创建自机类 `ReimuPlayer`，然后用 `AddPlayerToPlayerList` 添加到自机列表。
+来到 `player.lua`，我们创建自机类 `ReimuPlayer`，然后用 `AddPlayerToPlayerList` 添加到自机列表。
 
 ```lua
 ReimuPlayer = Class(player_class)
 AddPlayerToPlayerList("Hakurei Reimu 2P", "ReimuPlayer", "Reimu")
 ```
 
-剩下的任务，就是视情况换掉自机的默认行为。具体来说，我们考虑重写 `ReimuPlayer` 自机类的以下回调函数：
+上面的操作和我们前一节介绍的是一致的。
+
+剩下的任务，就是根据需求换掉自机的默认行为。具体来说，我们考虑重写 `ReimuPlayer` 自机类的以下回调函数：
 
 - `ReimuPlayer:init()` 初始化，一般包括资源加载、自机属性设置
-- `ReimuPlayer:frame()` 帧逻辑
+- `ReimuPlayer:frame()` 每帧执行的逻辑
 - `ReimuPlayer:render()` 渲染，一般包括自机本身的渲染、子机的渲染、其他相关组件的渲染
-- `ReimuPlayer:shoot()` 通常射击，一般包括子弹 obj 实例的创建
+- `ReimuPlayer:shoot()` 通常射击，一般就是生成一些自机子弹
 - `ReimuPlayer:spell()` 雷，像是在写符卡
 - `ReimuPlayer:special()` 按下 c 键时的行为
 
-## 初始化
+## 自机的初始化
 
-如果我们不重写 init (初始化) 回调，创建自机时会执行基类 `player_class` 的 init 回调，从而完成默认的初始化行为。即相当于
+如果我们不重写 init (初始化) 回调，创建自机时会执行基类 `player_class` 的 init 回调，从而完成默认的初始化行为，这相当于
 
 ```lua
 -- 冒号 ":" 是 lua 的语法糖, 效果是在函数参数最前面添一个 self
@@ -51,7 +52,7 @@ function ReimuPlayer:init()
 end
 ```
 
-与一些 lua 教程讲面向对象的情况不同，之后传入的 `self` 参数是新创建的自机实例 obj，而不是类 `ReimuPlayer` 本身。
+与一些 lua 教程讲面向对象的情况不同，这里传入的 `self` 参数是新创建的自机实例对象，而不是类 `ReimuPlayer` 本身。
 
 然后我们设置一些自机属性，基本的初始化工作就完成了：
 
@@ -61,18 +62,19 @@ ReimuPlayer = Class(player_class)
 -- 添加自机类到自机列表
 AddPlayerToPlayerList("Hakurei Reimu 2P", "ReimuPlayer", "Reimu")
 
--- 前置
 local img = "reimu-player:"
 local lib = {}
 
 -- 初始化回调
 function ReimuPlayer:init()
+    -- 使用基类的回调, 进行整体的初始化工作
     player_class.init(self)
+    -- 我们自己定义的函数, 集中导入需要的图片等资源
     lib.load_resources()
 
     -- 高低速
     self.hspeed, self.lspeed = 4, 2
-    -- 判定大小
+    -- 碰撞判定大小
     self.A, self.B = 0.5, 0.5
     -- 行走图
     self.imgs = {}
@@ -87,25 +89,26 @@ end
 ```
 
 - `hspeed,lspeed`：high speed 和 low speed 的简写，自机的高速/低速，默认值为 4/2。
-- `A,B`：之所以不是通常的 `a,b`，是因为改变贴图 (`img` 属性) 会同时改变判定大小 (根据加载贴图时的设置)，自机的行走图系统根据 `A,B` 属性重新修正判定大小。
+- `A,B`：碰撞判定，之所以不是通常的 `a,b`，是因为改变对象的贴图 (`img` 属性) 会同时改变判定大小 (根据导入贴图时给出的设置)，自机的行走图系统需要根据 `A,B` 属性重新修正自机判定大小。
 - `imgs`：自机的行走图，[一般](../dataer/fields#imgs)是一个包含 24 张图片的列表，
   - 前 8 张为静止动画，整体为一个循环节；
   - 中间 8 张为左移动画，倒数 4 张为循环节；
   - 后 8 张为右移动画，倒数 4 张为循环节。
 - `..` 是 lua 的一个运算符，表示字符串拼接。
 
-这里我们在文件开头设置了 `img` 和 `lib` 两个局部变量。`img = "reimu-player:"` 用来给资源名加一个固定前缀，防止和其他地方的资源名重复。`lib = {}` 用来存放一些 obj 和函数，以免像自带自机那样把它们定义成全局变量。
+我们在文件开头设置了 `img` 和 `lib` 两个局部变量，这不是必要的，但有一些好处：
+- `img = "reimu-player:"` 我们会给梦机用到的图片等资源加上这个前缀，防止和其他地方的资源名重复
+- `lib = {}` 我们会用它来存放一些 obj 和函数，大大减少全局变量的使用。像自带自机那样大量使用全局变量并不是一个好习惯
 
-我们定义了 `lib.load_resources()` 函数，在初始化时调用，用来导入需要的资源，比如 `self.imgs` 里的行走图 (现在还没导入，马上)。
+我们定义了 `lib.load_resources()` 函数，在初始化时调用，用来导入需要的资源，比如 `self.imgs` 里的行走图（现在还没导入，马上，马上）。
 
 ## 导入资源
 
-资源加载与设置的相关函数比较杂乱，我不太想一一介绍，想详细了解可以看耳教程 (LuaSTG教程by无耳) 和 LuaSTG 的 data (主要位于 `doc/lstg.ResourceManager.lua` 和 `lib/Lresources.lua`)。以后有空可能会好好介绍一下吧...... /* TODO */
+资源加载与设置的相关函数比较杂乱，我不太想一一介绍，想详细了解可以看耳教程（LuaSTG教程by无耳）和 LuaSTG 的 data（主要位于 `doc/lstg.ResourceManager.lua` 和 `lib/Lresources.lua`）。以后有空可能会好好介绍一下吧 …… /* TODO */
 
-灵梦用到的资源种类还挺全面的，能搞懂以下所有函数的用法基本肯定够用了。
+灵梦用到的资源种类还挺全面的，能搞懂以下所有函数的用法基本够用了。
 
 ```lua
--- 前置
 local img = "reimu-player:"
 local tex = "reimu-player:"
 local dir = "reimu-player/"
@@ -205,9 +208,9 @@ self.slist[6] = self.slist[5]
 }
 ```
 
-然后我们可以根据 `self.sp` 渲染子机。对于子机 $i=1,2,3,4$，惯例做法是用 `self.sp[i][3] > 0.5` 判断子机是否有效，如果有效，则将 `self.sp[i][1], self.sp[i][2]` 视为子机的直角坐标进行渲染。
+然后我们可以根据 `self.sp` 渲染子机。对于子机 $i=1,2,3,4$，惯例做法是用 `self.sp[i][3] > 0.5` 判断子机是否有效，如果有效，则将 `self.sp[i][1], self.sp[i][2]` 视为子机的坐标进行渲染。
 
-在这里介绍一组属性：`self.supportx, self.supporty`。support 表示子机，这组属性的字面意思是 "子机坐标"。它们会跟随自机坐标 `self.x, self.y`，但带有一点 "惯性"，经常用来代替 `self.x, self.y` 从而制造子机比自机慢半拍的视觉效果。
+在这里介绍一组属性：`self.supportx, self.supporty`。support 表示子机，这组属性的字面意思是 "子机的 xy 坐标"。它们会跟随自机坐标 `self.x`, `self.y`，但带有一点 "惯性"，经常用来代替 `self.x, self.y` 从而制造子机比自机慢半拍的效果。
 
 为了渲染子机，我们需要重写自机的渲染回调，在默认行为的基础上添加子机的渲染方法。我们用 `Render(img, x, y, rot, hscale, vscale)` 函数渲染子机贴图 (`rot, hscale, vscale` 不是必要的)：
 
@@ -220,13 +223,16 @@ function ReimuPlayer:render()
             local x = self.supportx + self.sp[i][1]
             local y = self.supporty + self.sp[i][2]
             local rot = self.timer * 3
+
             --# 风格1: 或者渲染, 或者不渲染
             if self.sp[i][3] > 0.5 then
                 Render(img .. "support", x, y, rot)
             end
+
             --# 风格2: 以透明度进行过渡
             -- SetImageState(img .. "support", "", Color(self.sp[i][3] * 255, 255, 255, 255))
             -- Render(img .. "support", x, y, rot)
+
             --# 风格3: 以贴图大小进行过渡
             -- Render(img .. "support", x, y, rot, self.sp[i])
             -- Render(img .. "support", x, y, rot, self.sp[i], 1)
@@ -239,9 +245,9 @@ end
 
 值得注意的是，子机位置表没有强制规定它的数据的含义。我们默认这些数据是以自机为原点，子机的相对坐标，但只要你有需求，它们可以是任何东西。一个经典的例子是通过把它们视为极坐标来实现环绕自机的子机。
 
-注 1：如果你更想要把子机写成 obj，那也是可以的，只需要让子机 obj 读取自机的属性执行相关操作就可以。
+> 注 1：如果你更想要把子机写成 obj，那也是可以的，只需要让子机 obj 读取自机的属性执行相关操作就可以。
 
-注 2：如果你想要更灵活的子机配置，比如管理超过 4 个子机，可以考虑自己写一套子机系统。教程整合有相关教程 (子机位置更新与对自带子机位置更新系统的解析.docx)，本教程也有子机系统的 data 解析可以参考。
+> 注 2：如果你想要更灵活的子机配置，比如管理超过 4 个子机，可以考虑自己写一套子机系统。教程整合有相关教程 (子机位置更新与对自带子机位置更新系统的解析.docx)，本教程的番外也有相关讲解。
 
 ## 通常射击
 
@@ -297,14 +303,14 @@ end
 
 我们用两个类 `bullet_main, bullet_main_eff` 来实现主炮子弹，`bullet_main` 是主炮子弹的本体，在击中敌人后创建 `bullet_main_eff`，用来渲染消弹效果。
 
-关于对象的定义和创建，目前有一套新的更加推荐的代码风格，记录在 data 的 `lib/Lobject.lua`。相比 data、自带自机、编辑器等地方的代码风格，新的风格更适应 vscode 等代码编辑器，性能也更好，我们来看一下。
+关于对象的定义和创建，我们有一套新的更加推荐的代码风格，记录在 data 的 `lib/Lobject.lua`。相比 data、自带自机、编辑器等地方的代码风格，新的风格更适应 vscode 等代码编辑器，性能也更好，我们来看一下。
 
 ```lua
 -- 创建 bullet_main 类
-lib.bullet_main = lstg.CreateGameObjectClass() -- 或者 xxx = Class(object)
+lib.bullet_main = lstg.CreateGameObjectClass() -- 或者 lib.bullet_main = Class(object)
 
 -- 定义 create 方法, 创建对象时使用该方法而不是 New 函数
--- 这样代码编辑器 (如vscode) 可以给我们提供相应的代码提示
+-- 这样代码编辑器 (比如 vscode) 可以给我们提供相应的代码提示
 -- 该方法相当于传统风格的 init 回调
 function lib.bullet_main.create(x, y, dmg)
     -- 创建一个 bullet_main 实例
@@ -376,7 +382,7 @@ end
 - 碰撞组：`group`
 - 图层：`layer`
 - 贴图信息：`img`
-- 运动：`x, y, vx, vy, ax, ay`
+- 位置、速度、加速度：`x, y, vx, vy, ax, ay`
 - 贴图渲染：`rot, omiga, hscale, vscale`
 - 碰撞判定：`a, b, rect`
 - 子弹伤害：`dmg, killflag`
@@ -392,7 +398,7 @@ end
 
 很遗憾，我们现在没有高级循环，也没有 set color，也没有 task (这个以后会有)。
 
-LuaSTG 中设置颜色是针对贴图而言的，通过 `SetImageState` 函数实现，设置之后在任何地方渲染贴图都会受到影响。所以当我们确定一个贴图的颜色会发生变化时，我们就不会在导入贴图时设置颜色，而是在对象要渲染该贴图时设置颜色。比如以下对消弹特效的渲染：
+LuaSTG 中设置颜色是针对贴图而言的，通过 `SetImageState` 函数实现，设置之后在任何地方渲染贴图都会受到影响。所以当我们确定一个贴图的颜色会发生变化时，我们就不会在导入贴图时设置颜色，而是在对象要渲染该贴图时设置颜色。就像以下对消弹特效的渲染：
 
 ```lua
 function lib.bullet_lspeed_eff1:render()
@@ -407,7 +413,7 @@ end
 
 ### 时序控制
 
-还是这个消弹特效，我们需要让它的不透明度随时间逐渐减到 0 然后删掉它。在编辑器里写弹幕时，我们一般会考虑用 task 和循环来解决。而对于自机子弹，由于控制逻辑比较简单，并且 task 不是很方便用，所以一般是用 `self.timer` 计数器进行时序控制 (比如前面代码里的 `local a = 255 * (1 - self.timer / 16)`)。
+还是这个消弹特效，我们需要让它的不透明度随时间逐渐减到 0 然后删掉它。在编辑器里写弹幕时，我们会考虑用 task 和循环来解决。而对于自机子弹，由于控制逻辑比较简单，并且 task 不是很方便用，所以一般是用 `self.timer` 计数器进行时序控制 (就像前面代码里的 `local a = 255 * (1 - self.timer / 16)`)。
 
 如果遇到比较复杂的时序控制需要用 task 来处理，也是可以的，我们在后面高速 bomb 再详细介绍。
 
@@ -546,7 +552,7 @@ end
 
 ## 低速：结界
 
-结界是一个经典的渲染和碰撞分离设计的类，它的碰撞判定是一个半径逐渐增大的圆，而渲染则由若干个方框贴图组成。它的代码就是以下两个类的混合：
+结界是一个经典的 “渲染和碰撞分开设计” 的类，它的碰撞判定是一个半径逐渐增大的圆，而渲染则由若干个方框贴图组成。它的代码就是以下两个类的混合：
 
 只负责碰撞判定的类：
 
@@ -563,6 +569,7 @@ function lib.kekkai.create(x, y)
     self.killflag = true
 
     local dr = 12
+    -- r 和 dr 是我们自己定义的属性
     self.r, self.dr = 0, dr
 end
 
@@ -572,7 +579,7 @@ function lib.kekkai:frame()
     -- 扩大判定范围
     self.r = self.r + self.dr
     self.a, self.b = self.r, self.r
-    -- 消除子弹的对象, 只会存在一帧所以可以每帧创建
+    -- 只会存在一帧的消弹圈, 可以每帧创建
     New(bomb_bullet_killer, self.x, self.y, self.a, self.b)
 end
 ```
@@ -596,6 +603,7 @@ function lib.kekkai.create(x, y)
     -- dr / 256 是因为图片资源的长宽为 256 像素
     self.dscale = dr / 256
 
+    -- 我们在弹幕制作中很熟悉的 task
     task.New(self, function()
         -- 创建各层结界的渲染信息
         for i = 1, n do
@@ -625,6 +633,7 @@ function lib.kekkai:frame()
 end
 
 function lib.kekkai:render()
+    -- 默认的渲染被以下渲染换掉了
     SetImgState(self, "mul+add", self._a, 64, 64, 255)
     for i = 1, self.n do
         -- 渲染各层结界
@@ -633,11 +642,11 @@ function lib.kekkai:render()
 end
 ```
 
-总的来说，只要能理解碰撞和渲染分开设计的思路，那么结界类应该不难看懂。
+总的来说，只要理解了碰撞和渲染分开设计的思路，那么这个结界类应该不算困难。
 
 ## 高速：梦想封印
 
-梦想封印是一个比较难做的 bomb，无论是时序控制、运动逻辑、渲染还是消弹特效都不是很容易实现。我的能力不足以在这里把这个 bomb 讲明白，所幸它用到的东西在这一章都讲到了 (应该)。如果你已经了解了前面的内容，想要挑战一下自己，那么可以去阅读[灵梦自机](./appendix)的 `lib.spell_ball` 部分，我写了一些注释以帮助理解。
+梦想封印是一个比较难做的 bomb，无论是时序控制、运动逻辑、渲染还是消弹特效都不是很容易实现。我的能力不足以在这里把这个 bomb 讲明白，所幸它用到的东西在这一章都讲到了 (应该)。如果你已经理解了前面的内容，想要挑战一下自己，那么可以去阅读[灵梦自机](./appendix)的 `lib.spell_ball` 部分，我写了一些注释以帮助理解。
 
 你也可以尝试自己写一个梦想封印，对于刚学自机的人可能会很困难，但是可以大大增加经验值。如果你觉得无从下手，可以参考以下流程来一点点地完成：
 
