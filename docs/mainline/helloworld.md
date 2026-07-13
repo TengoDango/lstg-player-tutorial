@@ -121,10 +121,11 @@ end
             "foreground": "#ff2929",
             "fontStyle": "bold"
         },
+        "function.global": "#ffbb00" // 全局函数
     }
 },
 ```
 
-这样，全局变量将以加粗的红色字体显示。
+这样，全局变量将以加粗的红色字体显示，全局函数将以金色显示。
 
 <img src="../assets/images/helloworld-global-red.png" style="width: 150pt; margin: 0 auto;">
