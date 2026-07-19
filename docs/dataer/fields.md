@@ -233,13 +233,9 @@ self.imgs = {
 }
 ```
 
-详见 [`PlayerWalkImageSystem`解析](../dataer/wisys)。
-
 ### `A,B: number` {#AB}
 
 【可读写】自机的判定大小。由于行走图系统更换贴图时会[自动改变判定大小](#ab)，行走图系统每帧需要根据 `A`,`B` 属性把自机判定纠正回来。
-
-详见 [`PlayerWalkImageSystem`解析](../dataer/wisys)。
 
 ## 操控相关
 

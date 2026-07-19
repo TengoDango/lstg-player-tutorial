@@ -328,13 +328,9 @@ death state 为 4 时执行逻辑，对应 miss 第三阶段的中间过程。
 
 自机的行走图。通常是一个 24 张图片的列表。前 8 张为静止，中间 8 张为左移动作，后 8 张为右移动作。
 
-详情见 [`PlayerWalkImageSystem`解析](../dataer/wisys)。
-
 ### `player.A,B: number`
 
 自机的判定大小。不使用 `a`,`b` 是因为行走图系统更换贴图时会自动把 `a`,`b` 修改为贴图的判定大小。行走图系统需要用 `A`,`B` 属性把自机判定纠正回来。
-
-详情见 [`PlayerWalkImageSystem`解析](../dataer/wisys)。
 
 ### `system:findTarget()` {#system-findtarget}
 - 如果自机当前的追踪目标 `player.target` “无效”，调用 [`player_class.findtarget`](../dataer/player#playerclass-findtarget) 更新追踪目标；
