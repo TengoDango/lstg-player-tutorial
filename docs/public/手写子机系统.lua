@@ -23,11 +23,7 @@ end
 ---子机信息初始化
 function ExtraPlayer:InitSupports()
     self.spinfo = {
-        ---数组部分类似sp表, 每帧更新子机信息
-        { 0, 0 },
-        { 0, 0 },
-        { 0, 0 },
-        { 0, 0 },
+        ---数组部分 spinfo[i] = {x,y} 每帧更新子机信息
 
         ---类似slist表
         list = {},

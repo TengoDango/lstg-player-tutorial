@@ -64,13 +64,13 @@
 
 【只读......吗】对象所属的类，决定对象的 `frame`,`render` 等回调。
 
-编辑器提供的子弹会通过更改 `class` 属性实现弹雾效果，感兴趣的话可以找一下 `bullet.lua` 的相关代码。
+编辑器提供的子弹会通过更改 `class` 属性实现弹雾效果，这给弹雾带来了一些比较糟糕的特性。
 
 ### `world: integer`
 
 【可读写】世界掩码，与更新、渲染、碰撞检测有关。
 
-如果了解过 “掩码” 的概念那么应该能明白这个要怎么用，不过看起来几乎没有应用场景。
+如果了解过 “掩码” 的概念那么也许能知道这个要怎么用，不过看起来几乎没有应用场景。
 
 ### `x,y: number`
 
@@ -96,7 +96,7 @@
 
 【不建议使用】速度 (`vx`,`vy`) 的大小和方向。
 
-比较糟糕的设计。更建议用 `GetV` 和 `SetV` 函数：
+比较糟糕的设计。如果可以的话，更建议用 `GetV` 和 `SetV` 函数：
 
 ```lua
 ---设置游戏对象的速度
@@ -188,123 +188,29 @@ omiga 是 omega 拼写错了，不嘻嘻。
 
 【可读写】`true` 则不受超级暂停 (super pause) 影响。
 
+## 自机子弹的特有属性
+
+具体逻辑参考 `enemy.lua` 的 `enemybase:colli(other)` 或 `editor.lua` 的 `_object:colli(other)`。
+
+### `dmg: number`
+
+【可读写】damage，自机子弹的伤害。
+
+### `mute: bool`
+
+【可读写】`true` 则击中敌机时不会有音效。
+
+### `killflag: bool`
+
+【可读写】`true` 则击中敌机时自机子弹不会被删除。
+
+### `killerenemy: object`
+
+【可读写】击中的敌机 obj，似乎不太能用得上。
+
 ## 自机对象的特有属性
 
-本小节的属性按 `player_system.lua` 里的出现顺序进行排列。
-
-### `death: integer`
-
-【可读写】死亡状态的计数器，倒计时，取值 0 ~ 100。
-
-详见 [`player.death`](../dataer/player-system#death)。
-
-### `lock: bool`
-
-【可读写】`true` 时，方向键无法控制自机，并且造成一些[额外影响](#death-state)。
-
-### `time_stop: bool`
-
-【可读写】`true` 时，自机的一些预设行为不会执行：
-
-- 低速法阵的若干状态更新，
-- `timer` 属性的更新，
-- 行走图系统的状态更新，
-- 子机位置表的状态更新，
-
-并且造成一些[额外影响](#death-state)。
-
-### `__death_state: integer` {#death-state}
-
-【只读】枚举 death state，主要由 `death` 属性决定，但开启 `lock` 或 `time_stop` 属性也会导致 death state 不为零。
-
-death state 不为零的情况会影响一些自机行为的执行：
-
-- 无法射击、使用 bomb、执行 c 键操作；
-- `slow` 和 `fire` 属性不会更新；
-- 不会吸引新的掉落物。
-
-如果你的自机有一些类似的行为，建议也检测一下 death state。
-
-其他 death state 取值参考 [`player.__death_state`](../dataer/player-system#death-state)。
-
-### `slow: 0 or 1`
-
-【只读】是否处于低速，低速为 1，高速为 0。
-
-- 在 death state 非零时不会更新；
-- 开启 `slowlock` 属性时强制为 1。
-
-### `dialog: bool`
-
-【可读写】开启该属性将对自机造成以下影响：
-
-- 无法射击、使用 bomb、执行 c 键操作；
-- `fire` 属性不会更新；
-- 被弹时不会发生任何事 (连消弹都没有)。
-
-### `nextshoot,nextspell,nextsp: integer`
-
-【可读写】射击 / 使用 bomb / 执行 c 键操作对应的剩余冷却时间 (单位：帧)。
-
-### `slowlock: bool`
-
-【可读写】`true` 则 `slow` 属性强制为 1。
-
-### `hspeed,lspeed: number`
-
-【可读写】自机的高速、低速。前缀 `h`,`l` 表示 high 和 low。
-
-### `__move_dx,__move_dy: number`
-
-【只读】当前帧由方向键导致的移动量，详情见 [`player-system/frame-move`](../dataer/player-system#frame-move)
-
-### `fire: 0 ~ 1`
-
-【只读】平滑跟随射击键状态，按住射击键为 1，松开为 0。
-
-### `collect_line: number`
-
-【可读写】收集线高度。
-
-### `lh: 0 ~ 1`
-
-【只读】平滑跟随 `slow` 属性，每帧增加/减少 0.15，限制取值范围 0 ~ 1。
-
-### `support: 0 ~ 4`
-
-【只读】平滑跟随火力等级 `int(火力值 / 100) in {0,1,2,3,4}`，每帧增加/减少 0.0625。
-
-### `supportx,supporty: number`
-
-【只读】平滑跟随自机坐标，线性插值，一般用于子机。
-
-### `protect: integer`
-
-【可读写】自机剩余无敌时间 (单位：帧)。
-
-### `slist: table`
-
-【可读写】子机的设定位置表。
-
-`self.slist[火力等级][子机编号] = {高速-x, 高速-y, 低速-x, 低速-y}`
-
-### `sp: table`
-
-【只读】子机的实际位置表。
-
-`self.sp[火力等级][子机编号] = {x, y, 有效性:0~1}`
-
-### `grazer: object`
-
-擦弹圈的判定和低速法阵 (aura) 的渲染，属于 `GROUP_PLAYER` 碰撞组。
-
-如果你在做一些类似的东西，比如子机 obj，或许可以参考一下 `player.lua` 的 `grazer` 类的写法。
-
-### `target: object or nil`
-
-给自机提供一个追踪目标，确保该目标有效、开启碰撞、属于 `GROUP_ENEMY` 或 `GROUP_NONTJT` 碰撞组。
-
-没有按下射击键时固定为 `nil`。
+## 贴图与判定
 
 ### `imgs: table` {#imgs}
 
@@ -335,22 +241,129 @@ self.imgs = {
 
 详见 [`PlayerWalkImageSystem`解析](../dataer/wisys)。
 
-## 自机子弹的特有属性
+## 操控相关
 
-具体逻辑参考 `enemy.lua` 的 `enemybase:colli(other)` 或 `editor.lua` 的 `_object:colli(other)`。
+### `lock: bool`
 
-### `dmg: number`
+【可读写】禁止操控自机。内部原理是改变 death state 造成的[额外影响](#death-state)。
 
-【可读写】damage，自机子弹的伤害。
+### `time_stop: bool`
 
-### `mute: bool`
+【可读写】时停自机。具体来说，在 `true` 时，自机的一些预设行为不会执行：
 
-【可读写】`true` 则击中敌机时不会有音效。
+- 低速法阵的若干状态更新
+- `timer` 属性的更新
+- 行走图系统的状态更新
+- 子机位置表的状态更新
 
-### `killflag: bool`
+并且造成一些[额外影响](#death-state)。
 
-【可读写】`true` 则击中敌机时自机子弹不会被删除。
+## 移动相关
 
-### `killerenemy: object`
+### `slow: 0 or 1`
 
-【可读写】击中的敌机 obj，似乎不太能用得上。
+【只读】是否处于低速，低速为 1，高速为 0。
+
+- 在 death state 非零时不会更新
+- 开启 `slowlock` 属性时强制为 1
+
+### `slowlock: bool`
+
+【可读写】`true` 则 `slow` 属性强制为 1。
+
+### `lh: 0 ~ 1`
+
+【只读】平滑跟随 `slow` 属性，每帧增加/减少 0.15，限制取值范围 0 ~ 1。
+
+### `hspeed,lspeed: number`
+
+【可读写】自机的高速、低速。前缀 `h`,`l` 表示 high 和 low。
+
+### `__move_dx,__move_dy: number`
+
+【只读】当前帧由方向键导致的移动量，详见 [`player-system/frame-move`](../dataer/player-system#frame-move)
+
+## 射击相关
+
+### `dialog: bool`
+
+【可读写】一般在对话时使用。开启该属性将对自机造成以下影响：
+
+- 无法射击、使用 bomb、执行 c 键操作
+- `fire` 属性不会更新
+- 被弹时不会发生任何事 (连消弹都没有)
+
+### `fire: 0 ~ 1`
+
+【只读】平滑跟随射击键状态，按住射击键为 1，松开为 0。
+
+### `nextshoot,nextspell,nextsp: integer`
+
+【可读写】射击 / 使用 bomb / 执行 c 键操作对应的剩余冷却时间 (单位：帧)。
+
+### `target: object or nil`
+
+给自机提供一个追踪目标，确保该目标有效、开启碰撞、属于 `GROUP_ENEMY` 或 `GROUP_NONTJT` 碰撞组。
+
+没有按下射击键时固定为 `nil`。
+
+## 子机相关
+
+### `support: 0 ~ 4`
+
+【只读】平滑跟随火力等级 `int(火力值 / 100) in {0,1,2,3,4}`，每帧增加/减少 0.0625。
+
+### `supportx,supporty: number`
+
+【只读】平滑跟随自机坐标，指数逼近，一般用于子机。
+
+### `slist: table`
+
+【可读写】子机的设定位置表。
+
+`self.slist[火力等级][子机编号] = { 高速x, 高速y, 低速x, 低速y }`
+
+### `sp: table`
+
+【只读】子机的实际位置表。
+
+`self.sp[火力等级][子机编号] = { x, y, 有效性:0~1 }`
+
+## 被弹相关
+
+### `death: integer`
+
+【可读写】死亡状态的计数器，倒计时，取值 0 ~ 100。
+
+详见 [`player.death`](../dataer/player-system#death)。
+
+### `__death_state: integer` {#death-state}
+
+【只读】枚举 death state，主要由 `death` 属性决定，但开启 `lock` 或 `time_stop` 属性也会导致 death state 不为零。
+
+death state 不为零的情况会影响一些自机行为的执行：
+
+- 方向键无法控制自机
+- 无法射击、使用 bomb、执行 c 键操作
+- `slow` 和 `fire` 属性不会更新
+- 不会吸引新的掉落物
+
+如果你的自机有一些类似的行为，建议也检测一下 death state。
+
+其他 death state 取值参考 [`player.__death_state`](../dataer/player-system#death-state)。
+
+## 其他
+
+### `collect_line: number`
+
+【可读写】收集线高度。
+
+### `protect: integer`
+
+【可读写】自机剩余无敌时间 (单位：帧)。
+
+### `grazer: object`
+
+擦弹圈的判定和低速法阵 (aura) 的渲染，属于 `GROUP_PLAYER` 碰撞组。
+
+如果你在做一些类似的东西，比如子机 obj，或许可以参考一下 `player.lua` 的 `grazer` 类的写法。

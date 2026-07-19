@@ -55,7 +55,7 @@ export default withMermaid({
       {
         text: 'Data',
         items: [
-          { text: '如果你想要，你得自己来拿', link: '/dataer/if-you-want-it' },
+          { text: '如何阅读 data', link: '/dataer/if-you-want-it' },
           { text: '自机相关属性整理', link: '/dataer/fields' },
           { text: 'player.lua 解析', link: '/dataer/player' },
           { text: 'player_system.lua 解析', link: '/dataer/player-system' },

@@ -307,16 +307,16 @@ end
 
 ```lua
 -- 创建 bullet_main 类
-lib.bullet_main = lstg.CreateGameObjectClass() -- 或者 lib.bullet_main = Class(object)
+lib.bullet_main = Class(object) -- 新版的aex更推荐使用lstg.CreateGameObjectClass()
 
 -- 定义 create 方法, 创建对象时使用该方法而不是 New 函数
 -- 这样代码编辑器 (比如 vscode) 可以给我们提供相应的代码提示
 -- 该方法相当于传统风格的 init 回调
 function lib.bullet_main.create(x, y, dmg)
-    -- 创建一个 bullet_main 实例
+    -- 创建 bullet_main 的一个实例对象
     local self = New(lib.bullet_main)
 
-    -- 设置该实例的若干属性
+    -- 设置该实例对象的若干属性
     self.group = GROUP_PLAYER_BULLET
     self.layer = LAYER_PLAYER_BULLET
     self.img = img .. "bullet-main"
@@ -349,10 +349,10 @@ function lib.bullet_main:kill()
 end
 
 -- 主炮消弹特效
-lib.bullet_main_eff = lstg.CreateGameObjectClass()
+lib.bullet_main_eff = Class(object)
 
 -- 由于对象的创建完全由我们自己控制, 我们可以随便给 create 方法起名
--- 比如这里是把 create 方法挂在本体类上
+-- 比如这里是搞了一个 create_eff 函数挂在本体类上
 -- 甚至可以直接写 local function create_bullet_main_eff(x,y) ... end
 -- (当然为了作用域不出问题得把函数挂到 lib 上)
 function lib.bullet_main.create_eff(x, y)
@@ -377,7 +377,7 @@ function lib.bullet_main_eff:frame()
 end
 ```
 
-初始化对象属性时，你可以检查下面的列表来防止遗漏：
+初始化对象属性时，你可以检查下面的列表来防止遗漏，这些属性的含义可以参考[自机相关属性整理](../dataer/fields)：
 
 - 碰撞组：`group`
 - 图层：`layer`
@@ -390,7 +390,7 @@ end
 
 子机发射的子弹类也是差不多的定义，篇幅原因我们就不详细介绍了，只谈一些细节。想看详细代码可以去[附录：自机代码下载](./appendix)下载。
 
-### 设置颜色
+## 设置颜色
 
 低速子机的直线弹有一个消弹特效是逐渐变成透明的，如果是在编辑器里我们可以这么写：
 
@@ -411,19 +411,21 @@ end
 
 我们也可以用 `SetImgState(unit, blend, a, r, g, b)` 设置 `unit.img` 贴图的颜色，但是同样地，其他共用该贴图的对象也会受到影响。
 
+> 注：ani 类型的资源（比如通过 `LoadAnimation` 导入的资源）与一般贴图的使用有所不同。`self.img` 属性允许使用 ani 资源，`SetImgState` 也允许它的 `unit.img` 是 ani 资源。但 `SetImageState` 不支持 ani 资源，需使用 `SetAnimationState`。
+ 
 ### 时序控制
 
 还是这个消弹特效，我们需要让它的不透明度随时间逐渐减到 0 然后删掉它。在编辑器里写弹幕时，我们会考虑用 task 和循环来解决。而对于自机子弹，由于控制逻辑比较简单，并且 task 不是很方便用，所以一般是用 `self.timer` 计数器进行时序控制 (就像前面代码里的 `local a = 255 * (1 - self.timer / 16)`)。
 
 如果遇到比较复杂的时序控制需要用 task 来处理，也是可以的，我们在后面高速 bomb 再详细介绍。
 
-### 诱导弹
+## 诱导弹
 
 利用 data 提供的诱导弹模板 `player_bullet_trail` 我们可以比较方便地定义诱导弹：
 
 ```lua
 -- 此处省略消弹特效相关内容
-lib.bullet_trail = lstg.CreateGameObjectClass()
+lib.bullet_trail = Class(object)
 
 function lib.bullet_trail.create(x, y, rot, trail, dmg)
     local self = New(lib.bullet_trail)
@@ -443,7 +445,7 @@ end
 - 诱导弹模板的解析见 [`player_bullet_trail`](../dataer/player#trail)。
 - 选择追踪哪个敌人的逻辑见 [`player_class.findtarget`](../dataer/player#playerclass-findtarget)。
 
-### shoot 回调
+## shoot 回调
 
 定义了子弹类之后，我们在 shoot 回调里创建子弹实例：
 
@@ -503,9 +505,9 @@ self.anglelist = {
 }
 ```
 
-## Bomb
+## Bomb：spell 回调
 
-终于来到了灵梦的高速雷和低速雷。data 会帮我们处理 bomb 数量的变化逻辑，我们只需要处理剩余的逻辑，主要是发射弹幕、调整收点线以及一些特效。如果之前的通常射击你能够看懂，那么我应该不需要详细解释以下代码：
+终于来到了灵梦的高速雷和低速雷。data 会帮我们处理 bomb 数量的变化逻辑，我们只需要处理剩余的逻辑，主要是发射弹幕、调整收点线以及一些特效。如果之前的通常射击你能够看懂，那么通过注释应该能看懂以下代码：
 
 ```lua
 -- Bomb 对应回调
@@ -552,7 +554,7 @@ end
 
 ## 低速：结界
 
-结界是一个经典的 “渲染和碰撞分开设计” 的类，它的碰撞判定是一个半径逐渐增大的圆，而渲染则由若干个方框贴图组成。它的代码就是以下两个类的混合：
+结界是一个经典的 “渲染和碰撞分开设计” 的类，它的碰撞判定是一个半径逐渐增大的圆，而渲染则由若干个方框贴图组成。它的代码就是下面两个类的混合：
 
 只负责碰撞判定的类：
 
@@ -607,6 +609,7 @@ function lib.kekkai.create(x, y)
     task.New(self, function()
         -- 创建各层结界的渲染信息
         for i = 1, n do
+            -- 每 t 帧创建一层结界
             self.list[i] = { scale = 0, rot = 0 }
             self.n = i
             task.Wait(t)
@@ -626,6 +629,7 @@ function lib.kekkai:frame()
     -- 结界渲染信息更新
     local omega = 1
     for i = 1, self.n do
+        -- 把每层结界分别扩大
         self.list[i].scale = self.list[i].scale + self.dscale
         self.list[i].rot = self.list[i].rot + omega
         omega = omega * -1
@@ -633,7 +637,7 @@ function lib.kekkai:frame()
 end
 
 function lib.kekkai:render()
-    -- 默认的渲染被以下渲染换掉了
+    -- 重写渲染函数，原本的默认渲染不会再进行
     SetImgState(self, "mul+add", self._a, 64, 64, 255)
     for i = 1, self.n do
         -- 渲染各层结界

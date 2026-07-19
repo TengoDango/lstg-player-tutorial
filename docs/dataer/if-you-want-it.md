@@ -2,7 +2,7 @@
 
 阅读自机相关的 data 内容对理解自机运行的原理有很大帮助。读 data 这件事并不容易，我会在这个教程里作一些整理，但是我仍然非常希望你亲自去读一读 data。如果你不知道如何查阅 data，也许这一页可以帮到你。
 
-阅读 data 之前的准备工作见[准备工作](../mainline/helloworld#preparation)。
+阅读 data 之前，我们需要一个代码编辑器，比如 vscode。配置 vscode 的流程见[准备工作](../mainline/helloworld#preparation)。
 
 我们可以按 `ctrl+p` 快捷键搜索名字里带 "player" 的文件，有 `player.lua`, `player_system.lua` 两个 lua 文件，它们包含了自机系统的大部分逻辑，我们之后会重点分析。
 
@@ -12,11 +12,11 @@
 
 <img src="../assets/images/if-you-want-it-2.png" style="width: 60%; margin: 0 auto;">
 
-全局搜索 (`ctrl+shift+f`)、搜索文件 (`ctrl+p`)、查找定义 (`f12`)、查找引用 (`shift+f12`) 四个功能在查阅 data 时非常实用，使用得当可以帮助你快速定位想要查找的内容。
+全局搜索 (`ctrl+shift+f`)、搜索文件 (`ctrl+p`)、查找定义 (`f12`)、查找引用 (`shift+f12`) 四个功能在查阅 data 时非常实用，可以帮助你快速定位想要查找的内容。
 
 于是自机相关的文件如下，你可以尝试用前面提到的方法搜索它们：
 - `THlib/player/player.lua` \
-  浅层的自机逻辑，涉及自机的基类以及一些自机相关的class和函数；
+  浅层的自机逻辑，涉及自机的基类以及一些自机相关的类和函数；
 - `THlib/player/player_system.lua` \
   深层的自机逻辑，涉及大量的自机特有的属性和行为；
 - `plugins/PlayerExtensions` \

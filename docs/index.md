@@ -1,4 +1,4 @@
-# LuaSTG 自机教程 [连载中]
+# LuaSTG 自机教程
 
 欢迎来到 LuaSTG 自机教程！
 

@@ -19,16 +19,18 @@ function ExtraPlayer:init()
     self.spx = { nil, nil, nil, nil }
     self.spy = { nil, nil, nil, nil }
     -- 延时回收子机的计数器
-    self.counter = 60
+    self.counter = 0
 end
 
 function ExtraPlayer:frame()
     player_class.frame(self)
+    if self.time_stop then return end
+
     -- 计数器更新
     if self.slow == 0 then
-        self.counter = self.counter + 1
+        self.counter = self.counter - 1
     else
-        self.counter = 0
+        self.counter = 60
     end
     -- 子机位置更新
     for i = 1, 4 do
@@ -40,7 +42,7 @@ function ExtraPlayer:frame()
         elseif not is_valid and self.spx[i] then
             -- 火力降低, 子机消失 -> 清除位置
             self.spx[i], self.spy[i] = nil, nil
-        elseif is_valid and self.spx[i] and self.counter >= 60 then
+        elseif is_valid and self.spx[i] and self.counter <= 0 then
             -- 稳定在高速状态 -> 线性插值逼近设定位置
             local x = self.x + self.sp[i][1]
             local y = self.y + self.sp[i][2]
@@ -52,7 +54,7 @@ end
 
 function ExtraPlayer:render()
     player_class.render(self)
-    if self.counter >= 60 then
+    if self.counter <= 0 then
         SetImageState('parimg15', 'mul+add', Color(255, 255, 255, 255))
     else
         -- 子机频闪
@@ -66,13 +68,3 @@ function ExtraPlayer:render()
         end
     end
 end
-
--- function ExtraPlayer:special()
---     self.nextsp = 30
---     if self.x < 0 then
---         lstg.var.power = lstg.var.power - 100
---     else
---         lstg.var.power = lstg.var.power + 100
---     end
---     lstg.var.power = max(0, min(400, lstg.var.power))
--- end
